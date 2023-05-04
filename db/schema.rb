@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_04_151522) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_04_163801) do
   create_table "appointments", force: :cascade do |t|
     t.integer "doctor_id"
     t.integer "patient_id"
@@ -23,6 +23,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_151522) do
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
   end
 
+  create_table "attributs", force: :cascade do |t|
+    t.integer "specialty_id", null: false
+    t.integer "doctor_id"
+    t.index ["doctor_id"], name: "index_attributs_on_doctor_id"
+    t.index ["specialty_id"], name: "index_attributs_on_specialty_id"
+  end
+
   create_table "cities", force: :cascade do |t|
     t.string "name"
   end
@@ -30,10 +37,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_151522) do
   create_table "doctors", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "speciality"
     t.string "zip_code"
     t.integer "city_id"
+    t.integer "specialty_id"
     t.index ["city_id"], name: "index_doctors_on_city_id"
+    t.index ["specialty_id"], name: "index_doctors_on_specialty_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -43,7 +51,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_151522) do
     t.index ["city_id"], name: "index_patients_on_city_id"
   end
 
+  create_table "specialties", force: :cascade do |t|
+    t.string "name"
+  end
+
   add_foreign_key "appointments", "cities"
+  add_foreign_key "attributs", "doctors"
+  add_foreign_key "attributs", "specialties"
   add_foreign_key "doctors", "cities"
+  add_foreign_key "doctors", "specialties"
   add_foreign_key "patients", "cities"
 end
