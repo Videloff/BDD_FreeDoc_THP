@@ -43,7 +43,7 @@ end
 
 30.times do |i|
   patient = Patient.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, city_id: town[rand(0..4)].id)
-  doctor = Doctor.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, zip_code: Faker::Address.zip_code, city_id: town[rand(0..4)].id, specialty_id: specs[rand(0..6)].id)
+  doctor = Doctor.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, city_id: town[rand(0..4)].id, specialty_id: specs[rand(0..6)].id)
   patients << patient
   doctors << doctor
 end
